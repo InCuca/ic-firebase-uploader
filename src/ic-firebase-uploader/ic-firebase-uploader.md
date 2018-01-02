@@ -1,6 +1,6 @@
 This component is a multi-file uploader for firebase
 
-```js
+```jsx
 function getFileName(file) {
   return file.name + Math.floor(Math.random() * 1000)
 }
@@ -19,18 +19,18 @@ function onClick(fullPath, downloadUrl) {
 function onUploaded(fullPath) {}
 
 function onDeleted(fullPath) {}
-```
 
-  <ic-firebase-upload
-    max-files="3"
-    path="images"
-    :getFileName="getFileName"
-    @upload="onUpload"
-    @delete="onDelete"
-    @uploaded="onUploaded"
-    @deleted="onDeleted"
-    @click="onClick">
-  </ic-firebase-upload>
+<ic-firebase-uploader
+  max-files="3"
+  path="images"
+  :getFileName="getFileName"
+  @upload="onUpload"
+  @delete="onDelete"
+  @uploaded="onUploaded"
+  @deleted="onDeleted"
+  @click="onClick">
+</ic-firebase-uploader>
+```
 
 Dependencies (add them manually):
 [Font-Awesome](http://fontawesome.io)

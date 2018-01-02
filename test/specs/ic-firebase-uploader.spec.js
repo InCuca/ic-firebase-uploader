@@ -14,16 +14,16 @@ describe('ic-firebase-uploader.vue', () => {
     expect(vm.$options.name).to.equal('ic-firebase-uploader')
   })
 
-  it.skip('max-files prop should be required', () => {
-    // TODO: Implement test
+  it('max-files prop should be required', () => {
+    expect(vm.$options.propsData.maxFiles.required).to.equal(true)
   })
 
-  it.skip('path prop should be required', () => {
-    // TODO: Implement test
+  it('path prop should be required', () => {
+    expect(vm.$options.propsData.path.required).to.equal(true)
   })
 
-  it.skip('getFileName prop should be required', () => {
-    // TODO: Implement test
+  it('getFileName prop should be required', () => {
+    expect(vm.$options.propsData.getFileName.required).to.equal(true)
   })
 
   it.skip('getFileName should be called with a file', () => {

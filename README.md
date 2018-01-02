@@ -12,12 +12,6 @@
 
 `npm i --save ic-firebase-uploader`
 
-## Demo and Docs
-
-`npm run serve`
-
-## Usage
-
 ### ES6 Modules / CommonJS
 
 ```js
@@ -66,6 +60,11 @@ function onDelete(fullPath, doDelete) {
   @delete="onDelete">
 </ic-firebase-upload>
 ```
+
+## Demo and Docs
+
+`npm run serve`
+
 ## Build
 
 Build configuration is located in the `poi.config.js` file, to build just run: `npm run build`, it will build to `cjs` and `umd` directories.

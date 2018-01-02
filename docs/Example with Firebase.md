@@ -17,8 +17,7 @@ function getFileName(file) {
 }
 
 function getStorage() {
-  firebase.initializeApp(config)
-  return firebase.storage()
+  return firebase.initializeApp(config).storage()
 }
 
 function onUpload(fullPath, doUpload) {

@@ -1,17 +1,32 @@
 import Vue from 'vue'
+import firebase from 'firebase'
 import Component from '../../src/ic-firebase-uploader/ic-firebase-uploader'
 
 describe('ic-firebase-uploader.vue', () => {
   const Constructor = Vue.extend(Component)
-  let propsData
+  const config = {
+    apiKey: "AIzaSyBMlvoWc9MI1boEeXFWNuD8uYv-8mpAMSU",
+    authDomain: "ic-firebase-uploader.firebaseapp.com",
+    databaseURL: "https://ic-firebase-uploader.firebaseio.com",
+    projectId: "ic-firebase-uploader",
+    storageBucket: "ic-firebase-uploader.appspot.com",
+    messagingSenderId: "526916383818"
+  }
+
+  let propsData, app
 
   beforeEach(() => {
+    app = firebase.initializeApp(config)
+
     propsData = {
       maxFiles: 3,
       path: 'images',
-      getFileName: () => {}
+      getFileName: () => {},
+      storage: app.storage(),
     }
   })
+
+  afterEach(() => app.delete())
 
   it('should instance the right component', () => {
     const vm = new Constructor({propsData})
@@ -38,8 +53,16 @@ describe('ic-firebase-uploader.vue', () => {
     expect(vm.$options.props.storage.required).to.equal(true)
   })
 
-  it.skip('getFileName should be called with a file', () => {
-    // TODO: Implement test
+  it('getFileName should be called with a file', done => {
+    const vm = new Constructor({
+      propsData,
+      ...{
+        getFileName: file => {
+          expect(file).to.be.instanceOf(File)
+          done()
+        }
+      }
+    })
   })
 
   it.skip('max-files should limit the number of uploaded files', () => {

@@ -28,8 +28,9 @@ function onDelete({doDelete}) {
   doDelete();
 }
 
-function onClick({url, event}) {
-  window.open(url)
+function onClick(event) {
+  event.preventDefault();
+  event.getDownloadURL().then(window.open)
 }
 
 function onError(err) {

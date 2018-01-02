@@ -6,7 +6,11 @@ describe('ic-firebase-uploader.vue', () => {
   let propsData
 
   beforeEach(() => {
-    propsData = {}
+    propsData = {
+      maxFiles: 3,
+      path: 'images',
+      getFileName: () => {}
+    }
   })
 
   it('should instance the right component', () => {
@@ -15,15 +19,18 @@ describe('ic-firebase-uploader.vue', () => {
   })
 
   it('max-files prop should be required', () => {
-    expect(vm.$options.propsData.maxFiles.required).to.equal(true)
+    const vm = new Constructor({ propsData })
+    expect(vm.$options.props.maxFiles.required).to.equal(true)
   })
 
   it('path prop should be required', () => {
-    expect(vm.$options.propsData.path.required).to.equal(true)
+    const vm = new Constructor({propsData})
+    expect(vm.$options.props.path.required).to.equal(true)
   })
 
   it('getFileName prop should be required', () => {
-    expect(vm.$options.propsData.getFileName.required).to.equal(true)
+    const vm = new Constructor({propsData})
+    expect(vm.$options.props.getFileName.required).to.equal(true)
   })
 
   it.skip('getFileName should be called with a file', () => {

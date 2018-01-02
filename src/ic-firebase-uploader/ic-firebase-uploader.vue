@@ -14,7 +14,21 @@
 
 <script>
 export default {
-  name: 'ic-firebase-uploader'
+  name: 'ic-firebase-uploader',
+  props: {
+    maxFiles: {
+      type: Number,
+      required: true,
+    },
+    path: {
+      type: String,
+      required: true,
+    },
+    getFileName: {
+      type: Function,
+      required: true,
+    }
+  }
 }
 </script>
 

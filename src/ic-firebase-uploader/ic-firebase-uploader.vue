@@ -27,6 +27,10 @@ export default {
     getFileName: {
       type: Function,
       required: true,
+    },
+    storage: {
+      type: Object,
+      required: true,
     }
   }
 }

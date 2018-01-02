@@ -26,6 +26,7 @@
     "dist/"
   ],
   "dependencies": {
+    "firebase": "^4.8.1",
     "vue": "^2.5.3"
   },
   "devDependencies": {

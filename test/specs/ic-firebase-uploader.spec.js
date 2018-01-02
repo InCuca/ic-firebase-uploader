@@ -33,6 +33,11 @@ describe('ic-firebase-uploader.vue', () => {
     expect(vm.$options.props.getFileName.required).to.equal(true)
   })
 
+  it('storage prop should be required', () => {
+    const vm = new Constructor({ propsData })
+    expect(vm.$options.props.storage.required).to.equal(true)
+  })
+
   it.skip('getFileName should be called with a file', () => {
     // TODO: Implement test
   })

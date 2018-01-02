@@ -64,6 +64,14 @@ export default {
       const files = event.target.files
       const curFilesLength = this.sentFiles.length + files.length
       if (curFilesLength > Number(this.maxFiles)) {
+        /**
+         * Called when something wrong occurs, also,
+         * it contains "maximum files reached" error when user tries to
+         * upload more then the max-files setting. Note: the upload
+         * process is not interrupted in the last situation.
+         * @event error
+         * @type {Error}
+         */
         this.$emit('error', new Error('maximum files reached'))
       }
       const cFiles = Array.prototype.slice.call(files, 0, 3)
@@ -73,6 +81,13 @@ export default {
       const fileName = this.getFileName(file)
       const rootRef = this.storage.ref()
       const fileRef = rootRef.child(this.path + '/' + fileName)
+      /**
+       * This event is called before each file upload begins
+       * call doUpload to begin upload. Properties in the
+       * payload: fullPath, remainingFiles, file and doUpload.
+       * @event upload
+       * @type {Object}
+       */
       this.$emit('upload', {
         fullPath: fileRef.fullPath,
         remainingFiles: files.length - index,

@@ -5,11 +5,8 @@ const firebase = require('firebase')
 
 const config = {
   apiKey: "AIzaSyBMlvoWc9MI1boEeXFWNuD8uYv-8mpAMSU",
-  authDomain: "ic-firebase-uploader.firebaseapp.com",
-  databaseURL: "https://ic-firebase-uploader.firebaseio.com",
   projectId: "ic-firebase-uploader",
   storageBucket: "ic-firebase-uploader.appspot.com",
-  messagingSenderId: "526916383818"
 }
 
 const app = firebase.initializeApp(config)

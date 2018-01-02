@@ -57,11 +57,11 @@ function getFileName(file) {
   return file.name + Math.floor(Math.random() * 1000)
 }
 
-function onUpload(fullPath, doUpload) {
+function onUpload({fullPath, doUpload}) {
   doUpload();
 }
 
-function onDelete(fullPath, doDelete) {
+function onDelete({fullPath, doDelete}) {
   doDelete();
 }
 ```

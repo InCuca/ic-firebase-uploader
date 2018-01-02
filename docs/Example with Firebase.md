@@ -12,24 +12,31 @@ const config = {
   messagingSenderId: "526916383818"
 }
 
+const app = firebase.initializeApp(config)
+window.unload = app.delete
+
 function getFileName(file) {
-  return file.name + Math.floor(Math.random() * 1000)
+  return Math.floor(Math.random() * 1000) + file.name
 }
 
 function getStorage() {
-  return firebase.initializeApp(config).storage()
+  return app.storage()
 }
 
-function onUpload(fullPath, doUpload) {
+function onUpload({fullPath, doUpload}) {
   doUpload();
 }
 
-function onDelete(fullPath, doDelete) {
+function onDelete({fullPath, doDelete}) {
   doDelete();
 }
 
-function onClick(fullPath, downloadUrl) {
+function onClick({fullPath, downloadUrl}) {
   window.open(downloadUrl)
+}
+
+function onError(err) {
+  console.error(err)
 }
 
 <ic-firebase-uploader
@@ -39,6 +46,7 @@ function onClick(fullPath, downloadUrl) {
   :storage="getStorage()"
   @upload="onUpload"
   @delete="onDelete"
-  @click="onClick">
+  @click="onClick"
+  @error="onError">
 </ic-firebase-uploader>
 ```

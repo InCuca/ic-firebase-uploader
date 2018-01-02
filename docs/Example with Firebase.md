@@ -30,11 +30,8 @@ function onDelete(fullPath, doDelete) {
 }
 
 function onClick(fullPath, downloadUrl) {
+  window.open(downloadUrl)
 }
-
-function onUploaded(fullPath) {}
-
-function onDeleted(fullPath) {}
 
 <ic-firebase-uploader
   path="images"
@@ -43,8 +40,6 @@ function onDeleted(fullPath) {}
   :storage="getStorage()"
   @upload="onUpload"
   @delete="onDelete"
-  @uploaded="onUploaded"
-  @deleted="onDeleted"
   @click="onClick">
 </ic-firebase-uploader>
 ```

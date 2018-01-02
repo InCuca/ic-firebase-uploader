@@ -37,6 +37,22 @@ Vue.component('ic-firebase-uploader', IcFirebaseUploader);
 ## Usage
 
 ```js
+const firebase = require('firebase')
+
+const config = {
+  apiKey: "AIzaSyBMlvoWc9MI1boEeXFWNuD8uYv-8mpAMSU",
+  authDomain: "ic-firebase-uploader.firebaseapp.com",
+  databaseURL: "https://ic-firebase-uploader.firebaseio.com",
+  projectId: "ic-firebase-uploader",
+  storageBucket: "ic-firebase-uploader.appspot.com",
+  messagingSenderId: "526916383818"
+}
+
+function getStorage() {
+  firebase.initializeApp(config)
+  return firebase.storage()
+}
+
 function getFileName(file) {
   return file.name + Math.floor(Math.random() * 1000)
 }
@@ -52,9 +68,10 @@ function onDelete(fullPath, doDelete) {
 
 ```html
 <ic-firebase-upload
-  max-files="3"
   path="images"
+  max-files="3"
   :getFileName="getFileName"
+  :storage="getStorage()"
   @upload="onUpload"
   @delete="onDelete">
 </ic-firebase-upload>

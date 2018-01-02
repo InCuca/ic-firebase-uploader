@@ -26,7 +26,6 @@
     "dist/"
   ],
   "dependencies": {
-    "firebase": "^4.8.1",
     "vue": "^2.5.3"
   },
   "devDependencies": {
@@ -37,6 +36,7 @@
     "chai": "^4.1.2",
     "eslint": "^4.11.0",
     "eslint-plugin-vue": "beta",
+    "firebase": "^4.8.1",
     "karma-chai": "^0.1.0",
     "karma-phantomjs-launcher": "^1.0.4",
     "karma-phantomjs-shim": "^1.5.0",

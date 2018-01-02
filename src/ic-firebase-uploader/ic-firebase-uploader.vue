@@ -17,7 +17,7 @@ export default {
   name: 'ic-firebase-uploader',
   props: {
     maxFiles: {
-      type: Number,
+      type: [Number, String],
       required: true,
     },
     path: {

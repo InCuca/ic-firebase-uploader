@@ -20,15 +20,15 @@ function getStorage() {
   return app.storage()
 }
 
-function onUpload({fullPath, doUpload}) {
+function onUpload({doUpload}) {
   doUpload();
 }
 
-function onDelete({fullPath, doDelete}) {
+function onDelete({doDelete}) {
   doDelete();
 }
 
-function onClick({fullPath, downloadUrl}) {
+function onClick({downloadUrl}) {
   window.open(downloadUrl)
 }
 

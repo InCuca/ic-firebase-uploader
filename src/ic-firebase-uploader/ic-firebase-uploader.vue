@@ -94,7 +94,7 @@ export default {
         this.$emit('error', new Error('maximum files reached'))
       }
       const cFiles = Array.prototype.slice.call(
-        files, 0, 3 - curFilesLength
+        files, 0, this.maxFiles - curFilesLength
       )
       cFiles.forEach(this.uploadFile)
     },

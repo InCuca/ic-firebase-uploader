@@ -1,8 +1,13 @@
 <template>
   <div class="ic-fb_uploader">
     <ul class="ic-fb_uploader-files">
-      <li v-for="fileRef in sentFiles" :key="fileRef.fullPath">
-        {{fileRef.name}}
+      <li v-for="file in sentFiles" :key="file.ref.fullPath">
+        <a
+          target="_blank"
+          :href="file.downloadUrl"
+          @click="onFileLinkClick(file.ref, $event)">
+          {{file.ref.name}}
+        </a>
       </li>
     </ul>
     <input
@@ -60,6 +65,20 @@ export default {
     onBtnClick() {
       this.$refs.loader.click()
     },
+    onFileLinkClick(fileRef, event) {
+      /**
+       * When user clicks in a file link, event contains
+       * fullPath and the getDownloadURL function that when is
+       * called returns a promise of the url.
+       * @event click
+       * @type {Object}
+       */
+      this.$emit('click', {
+        ...event,
+        fullPath: fileRef.fullPath,
+        getDownloadURL: fileRef.getDownloadURL,
+      })
+    },
     onChangeLoader(event) {
       const files = event.target.files
       const curFilesLength = this.sentFiles.length + files.length
@@ -84,13 +103,12 @@ export default {
       /**
        * This event is called before each file upload begins
        * call doUpload to begin upload. Properties in the
-       * payload: fullPath, remainingFiles, file and doUpload.
+       * payload: fullPath, file and doUpload.
        * @event upload
        * @type {Object}
        */
       this.$emit('upload', {
         fullPath: fileRef.fullPath,
-        remainingFiles: files.length - index,
         file,
         doUpload: this.getUploadFn(fileRef, file)
       })
@@ -98,7 +116,25 @@ export default {
     getUploadFn(fileRef, file) {
       return () => {
         fileRef.put(file)
-          .then(() => this.sentFiles.push(fileRef))
+          .then(() => fileRef.getDownloadURL())
+          .then(downloadUrl => {
+            this.sentFiles.push({
+              ref: fileRef,
+              downloadUrl,
+            })
+
+            /**
+             * This event is called after each file upload ends.
+             * Properties in the payload: fullPath and the getDownloadURL
+             * function that when is called returns a promise of the url.
+             * @event uploaded
+             * @type {Object}
+             */
+            this.$emit('uploaded', {
+              fullPath: fileRef.fullPath,
+              getDownloadURL: fileRef.getDownloadURL
+            })
+          })
           .catch(err => this.$emit('error', err))
       }
     }

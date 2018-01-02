@@ -1,4 +1,5 @@
 # ic-firebase-uploader
+[![Travis](https://img.shields.io/travis/InCuca/ic-firebase-uploader/master.svg)](https://travis-ci.org/InCuca/ic-firebase-uploader/branches)
 
 > This component is a multi-file uploader for firebase
 

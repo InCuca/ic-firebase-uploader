@@ -25,8 +25,6 @@ Vue.component('ic-firebase-uploader', IcFirebaseUploader);
 ### UMD
 
 ```html
-<ic-firebase-uploader text="Hello World!"></ic-firebase-uploader>
-
 <script src="https://unpkg.com/vue" charset="utf-8"></script>
 <script src="./dist/umd/ic-firebase-uploader.min.js" charset="utf-8"></script>
 <link rel="stylesheet" type="text/css" href="./dist/umd/ic-firebase-uploader.min.css">

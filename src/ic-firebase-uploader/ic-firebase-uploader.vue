@@ -8,7 +8,7 @@
           @click="onFileLinkClick(file.ref, $event)">
           {{file.ref.name}}
         </a>
-        <i class="fa fa-times ic-fb_uploader-delete" @click="onFileDeleteClick(file.ref)"></i>
+        <i class="fa fa-times ic-fb_uploader-delete" @click="onFileDeleteClick(file)"></i>
       </li>
     </ul>
     <input
@@ -78,7 +78,7 @@ export default {
         getDownloadURL: fileRef.getDownloadURL,
       })
     },
-    onFileDeleteClick(fileRef) {
+    onFileDeleteClick(sentFile) {
       /**
        * This event is called before a file delete begins
        * call doDelete to continue. Properties in the
@@ -87,14 +87,15 @@ export default {
        * @type {Object}
        */
       this.$emit('delete', {
-        fullPath: fileRef.fullPath,
-        doDelete: this.getDeleteFn(fileRef)
+        fullPath: sentFile.ref.fullPath,
+        doDelete: this.getDeleteFn(sentFile)
       })
     },
     onChangeLoader(event) {
       const files = event.target.files
-      const curFilesLength = this.sentFiles.length + files.length
-      if (curFilesLength > Number(this.maxFiles)) {
+      const curFilesLength = this.sentFiles.length
+      const afterFilesLength = curFilesLength + files.length
+      if (afterFilesLength > Number(this.maxFiles)) {
         /**
          * Called when something wrong occurs, also,
          * it contains "maximum files reached" error when user tries to
@@ -152,11 +153,12 @@ export default {
           .catch(err => this.$emit('error', err))
       }
     },
-    getDeleteFn(fileRef) {
-      const sentIndex = this.sentFiles.indexOf(fileRef)
+    getDeleteFn(file) {
+      const fileRef = file.ref
       return () => {
         fileRef.delete()
           .then(() => {
+            const sentIndex = this.sentFiles.indexOf(file)
             this.sentFiles.splice(sentIndex, 1)
             /**
              * This event is called after a file deletion ends.

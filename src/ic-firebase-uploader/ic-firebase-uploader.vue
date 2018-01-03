@@ -8,7 +8,7 @@
           @click="onFileLinkClick(file.ref, $event)">
           {{file.ref.name}}
         </a>
-        <i class="fa fa-times" @click="onFileDeleteClick(file.ref)"></i>
+        <i class="fa fa-times ic-fb_uploader-delete" @click="onFileDeleteClick(file.ref)"></i>
       </li>
     </ul>
     <input
@@ -184,6 +184,15 @@ export default {
 <style lang="css" scoped>
 .ic-fb_uploader .ic-fb_uploader-loader {
   display: none;
+}
+
+.ic-fb_uploader .ic-fb_uploader-delete {
+  cursor: pointer;
+  color: #ad3636;
+}
+
+.ic-fb_uploader .ic-fb_uploader-delete:hover {
+  opacity: .8;
 }
 </style>
 

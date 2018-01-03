@@ -162,10 +162,12 @@ export default {
       }
     },
     getDeleteFn(file) {
+      file.isLoading = true
       const fileRef = file.ref
       return () => {
         fileRef.delete()
           .then(() => {
+            file.isLoading = false
             const sentIndex = this.sentFiles.indexOf(file)
             this.sentFiles.splice(sentIndex, 1)
             /**
@@ -178,7 +180,10 @@ export default {
               fullPath: fileRef.fullPath,
             })
           })
-          .catch(err => this.$emit('error', err))
+          .catch(err => {
+            file.isLoading = false
+            this.$emit('error', err)
+          })
       }
     },
     getIconClasses(file) {
@@ -208,6 +213,9 @@ export default {
 
 .ic-fb_uploader .ic-fb_uploader-delete {
   cursor: pointer;
+}
+
+.ic-fb_uploader .ic-fb_uploader-delete.fa-times {
   color: #ad3636;
 }
 
@@ -220,6 +228,7 @@ export default {
   animation-iteration-count: infinite;
   -webkit-animation-timing-function: ease-in-out;
   animation-timing-function: ease-in-out;
+  color: #387cbd;
 }
 
 @-webkit-keyframes rotate {

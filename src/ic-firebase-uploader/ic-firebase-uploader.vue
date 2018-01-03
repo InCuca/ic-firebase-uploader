@@ -79,6 +79,7 @@ export default {
       })
     },
     onFileDeleteClick(sentFile) {
+      if (sentFile.isLoading) return;
       /**
        * This event is called before a file delete begins
        * call doDelete to continue. Properties in the

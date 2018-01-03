@@ -3,11 +3,13 @@
     <ul class="ic-fb_uploader-files">
       <li v-for="file in sentFiles" :key="file.ref.fullPath">
         <a
+          v-if="!file.isLoading"
           target="_blank"
           :href="file.downloadUrl"
           @click="onFileLinkClick(file.ref, $event)">
           {{file.ref.name}}
         </a>
+        <span v-else>{{file.ref.name}}</span>
         <i :class="getIconClasses(file)" @click="onFileDeleteClick(file)"></i>
       </li>
     </ul>

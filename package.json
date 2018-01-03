@@ -37,6 +37,7 @@
     "eslint": "^4.11.0",
     "eslint-plugin-vue": "beta",
     "firebase": "^4.8.1",
+    "font-awesome": "^4.7.0",
     "karma-chai": "^0.1.0",
     "karma-phantomjs-launcher": "^1.0.4",
     "karma-phantomjs-shim": "^1.5.0",

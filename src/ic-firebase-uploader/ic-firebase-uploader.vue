@@ -8,6 +8,7 @@
           @click="onFileLinkClick(file.ref, $event)">
           {{file.ref.name}}
         </a>
+        <i class="fa fa-times" @click="onFileDeleteClick(file.ref)"></i>
       </li>
     </ul>
     <input
@@ -79,6 +80,19 @@ export default {
         getDownloadURL: fileRef.getDownloadURL,
       })
     },
+    onFileDeleteClick(fileRef) {
+      /**
+       * This event is called before a file delete begins
+       * call doDelete to continue. Properties in the
+       * payload: fullPath, doDelete.
+       * @event delete
+       * @type {Object}
+       */
+      this.$emit('delete', {
+        fullPath: fileRef.fullPath,
+        doDelete: this.getDeleteFn(fileRef)
+      })
+    },
     onChangeLoader(event) {
       const files = event.target.files
       const curFilesLength = this.sentFiles.length + files.length
@@ -139,8 +153,27 @@ export default {
           })
           .catch(err => this.$emit('error', err))
       }
-    }
-  }
+    },
+    getDeleteFn(fileRef) {
+      const sentIndex = this.sentFiles.indexOf(fileRef)
+      return () => {
+        fileRef.delete()
+          .then(() => {
+            this.sentFiles.splice(sentIndex, 1)
+            /**
+             * This event is called after a file deletion ends.
+             * Properties in the payload: fullPath.
+             * @event deleted
+             * @type {Object}
+             */
+            this.$emit('deleted', {
+              fullPath: fileRef.fullPath,
+            })
+          })
+          .catch(err => this.$emit('error', err))
+      }
+    },
+  },
 }
 </script>
 

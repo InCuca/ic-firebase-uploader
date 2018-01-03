@@ -8,7 +8,7 @@
           @click="onFileLinkClick(file.ref, $event)">
           {{file.ref.name}}
         </a>
-        <i class="fa fa-times ic-fb_uploader-delete" @click="onFileDeleteClick(file)"></i>
+        <i :class="getIconClasses(file)" @click="onFileDeleteClick(file)"></i>
       </li>
     </ul>
     <input
@@ -130,13 +130,17 @@ export default {
     },
     getUploadFn(fileRef, file) {
       return () => {
+        const sentFile = {
+          ref: fileRef,
+          isLoading: true,
+        }
+        this.sentFiles.push(sentFile)
+
         fileRef.put(file)
           .then(() => fileRef.getDownloadURL())
           .then(downloadUrl => {
-            this.sentFiles.push({
-              ref: fileRef,
-              downloadUrl,
-            })
+            sentFile.downloadUrl = downloadUrl
+            sentFile.isLoading = false
 
             /**
              * This event is called after each file upload ends.
@@ -150,7 +154,10 @@ export default {
               getDownloadURL: fileRef.getDownloadURL
             })
           })
-          .catch(err => this.$emit('error', err))
+          .catch(err => {
+            this.$emit('error', err)
+            sentFile.isLoading = false
+          })
       }
     },
     getDeleteFn(file) {
@@ -173,6 +180,16 @@ export default {
           .catch(err => this.$emit('error', err))
       }
     },
+    getIconClasses(file) {
+      const classes = {
+        'fa': true,
+        'fa-times': !file.isLoading,
+        'fa-spinner': file.isLoading,
+        'ic-fb_uploader-delete': true,
+      }
+
+      return classes;
+    },
     /**
      * Open the file browser and ask user for the files
      */
@@ -191,6 +208,27 @@ export default {
 .ic-fb_uploader .ic-fb_uploader-delete {
   cursor: pointer;
   color: #ad3636;
+}
+
+.ic-fb_uploader .ic-fb_uploader-delete.fa-spinner {
+  -webkit-animation-name: rotate;
+  animation-name: rotate;
+  -webkit-animation-duration: 2s;
+  animation-duration: 2s;
+  -webkit-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+  -webkit-animation-timing-function: ease-in-out;
+  animation-timing-function: ease-in-out;
+}
+
+@-webkit-keyframes rotate {
+    from {-webkit-transform: rotate(0deg);transform: rotate(0deg);}
+    to {-webkit-transform: rotate(360deg);transform: rotate(360deg);}
+}
+
+@keyframes rotate {
+    from {-webkit-transform: rotate(0deg);transform: rotate(0deg);}
+    to {-webkit-transform: rotate(360deg);transform: rotate(360deg);}
 }
 
 .ic-fb_uploader .ic-fb_uploader-delete:hover {

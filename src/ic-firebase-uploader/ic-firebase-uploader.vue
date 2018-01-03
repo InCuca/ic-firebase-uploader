@@ -17,9 +17,10 @@
       ref="loader"
       multiple
       @change="onChangeLoader">
-    <button class="ic-fb_uploader-btn" @click="onBtnClick">
-      UPLOAD
-    </button>
+    <!-- @slot Override default upload button, you must call promptFiles method -->
+    <slot><button class="ic-fb_uploader-btn" @click="promptFiles">
+        UPLOAD
+    </button></slot>
   </div>
 </template>
 
@@ -63,9 +64,6 @@ export default {
     sentFiles: [],
   }),
   methods: {
-    onBtnClick() {
-      this.$refs.loader.click()
-    },
     onFileLinkClick(fileRef, event) {
       /**
        * When user clicks in a file link, event contains
@@ -172,6 +170,12 @@ export default {
           })
           .catch(err => this.$emit('error', err))
       }
+    },
+    /**
+     * Open the file browser and ask user for the files
+     */
+    promptFiles() {
+      this.$refs.loader.click()
     },
   },
 }

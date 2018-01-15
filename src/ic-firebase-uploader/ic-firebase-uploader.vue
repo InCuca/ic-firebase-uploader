@@ -129,7 +129,7 @@ export default {
        * @type {Object}
        */
       this.$emit('delete', {
-        id: sentFile.id || null,
+        id: sentFile.id,
         fullPath: sentFile.ref.fullPath,
         doDelete: this.getDeleteFn(sentFile)
       })

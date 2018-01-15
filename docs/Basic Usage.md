@@ -1,17 +1,6 @@
 Using with firebase
 
 ```jsx
-const firebase = require('firebase')
-
-const config = {
-  apiKey: "AIzaSyBMlvoWc9MI1boEeXFWNuD8uYv-8mpAMSU",
-  projectId: "ic-firebase-uploader",
-  storageBucket: "ic-firebase-uploader.appspot.com",
-}
-
-const app = firebase.initializeApp(config)
-window.unload = app.delete
-
 function getFileName(file) {
   return Math.floor(Math.random() * 1000) + file.name
 }

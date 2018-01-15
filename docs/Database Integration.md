@@ -1,19 +1,6 @@
 Using with firebase
 
 ```jsx
-const firebase = require('firebase')
-const app = firebase.initializeApp({
-  apiKey: "AIzaSyBMlvoWc9MI1boEeXFWNuD8uYv-8mpAMSU",
-  projectId: "ic-firebase-uploader",
-  storageBucket: "ic-firebase-uploader.appspot.com",
-  databaseURL: "https://ic-firebase-uploader.firebaseio.com/",
-})
-const dbRef = app.database().ref('files')
-window.unload = () => {
-  dbRef.off('value')
-  app.delete()
-}
-
 new Vue({
   template: `
     <ic-firebase-uploader
@@ -30,7 +17,8 @@ new Vue({
     </ic-firebase-uploader>
   `,
   data: () => ({
-    initialFiles: {}
+    initialFiles: {},
+    dbRef: null,
   }),
   methods: {
     getFileName(file) {
@@ -40,7 +28,7 @@ new Vue({
       return app.storage()
     },
     onUpload({doUpload}) {
-      const key = dbRef.push().key
+      const key = this.dbRef.push().key
       doUpload(key);
     },
     onUploaded({id, fullPath}) {
@@ -50,17 +38,21 @@ new Vue({
       doDelete();
     },
     onDeleted({id}) {
-      dbRef.child(id).remove()
+      this.dbRef.child(id).remove()
     },
     onError(err) {
       console.error(err)
     },
   },
   mounted() {
-    dbRef.on(
+    this.dbRef = app.database().ref('files')
+    this.dbRef.on(
       'value',
       ds => this.initialFiles = ds.val() || {}
     )
+  },
+  destroyed() {
+    this.dbRef.off('value')
   }
 })
 ```

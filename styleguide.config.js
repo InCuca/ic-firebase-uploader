@@ -36,5 +36,6 @@ module.exports = {
   serverPort: 6062,
   require: [
     'font-awesome/css/font-awesome.css',
-  ]
+    './start_app.js',
+  ],
 };

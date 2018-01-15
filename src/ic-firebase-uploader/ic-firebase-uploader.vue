@@ -76,23 +76,33 @@ export default {
     sentFiles: [],
   }),
   watch: {
-    initialFiles(files) {
-      const filesEntries = Object.entries(files)
-      filesEntries.forEach(
-        (fullPath, index) => {
-          const ref = this.storage.ref(fullPath)
-          ref.getDownloadURL().then(downloadUrl => {
-            const newFile = {
-              id: index,
-              ref,
-              downloadUrl,
-              isLoading: false,
-            }
-            this.sentFiles.push(newFile)
-          })
-        }
-      )
-    }
+    initialFiles: {
+      immediate: true,
+      handler(files) {
+        const filesEntries = Object.entries(files)
+        filesEntries.forEach(
+          (entry) => {
+            const fullPath = entry[1]
+            const index = entry[0]
+
+            // Do nothing if it already exists (placed by internal logic)
+            if (this.sentFiles.some(f => f.ref.fullPath === fullPath))
+              return
+
+            const ref = this.storage.ref(fullPath)
+            ref.getDownloadURL().then(downloadUrl => {
+              const newFile = {
+                id: index,
+                ref,
+                downloadUrl,
+                isLoading: false,
+              }
+              this.sentFiles.push(newFile)
+            })
+          }
+        )
+      }
+    },
   },
   methods: {
     onFileLinkClick(fileRef, event) {
@@ -150,8 +160,8 @@ export default {
       const fileRef = rootRef.child(this.path + '/' + fileName)
       /**
        * This event is called before each file upload begins
-       * call doUpload to begin upload. Properties in the
-       * payload: fullPath, file and doUpload.
+       * call doUpload to begin upload (call with id it it will be added to a database).
+       * Properties in the payload: fullPath, file and doUpload.
        * @event upload
        * @type {Object}
        */
@@ -162,8 +172,9 @@ export default {
       })
     },
     getUploadFn(fileRef, file) {
-      return () => {
+      return id => {
         const sentFile = {
+          id,
           ref: fileRef,
           isLoading: true,
         }
@@ -177,12 +188,13 @@ export default {
 
             /**
              * This event is called after each file upload ends.
-             * Properties in the payload: fullPath and the getDownloadURL
+             * Properties in the payload: id (undefined if it was not stored on a database), fullPath and the getDownloadURL
              * function that when is called returns a promise of the url.
              * @event uploaded
              * @type {Object}
              */
             this.$emit('uploaded', {
+              id,
               fullPath: fileRef.fullPath,
               getDownloadURL: fileRef.getDownloadURL
             })
@@ -204,7 +216,7 @@ export default {
             this.sentFiles.splice(sentIndex, 1)
             /**
              * This event is called after a file deletion ends.
-             * Properties in the payload: fullPath.
+             * Properties in the payload: fullPath and id (null if it was in a database).
              * @event deleted
              * @type {Object}
              */

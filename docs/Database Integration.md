@@ -32,7 +32,7 @@ new Vue({
       doUpload(key);
     },
     onUploaded({id, fullPath}) {
-      dbRef.child(id).set(fullPath)
+      this.dbRef.child(id).set(fullPath)
     },
     onDelete({doDelete}) {
       doDelete();

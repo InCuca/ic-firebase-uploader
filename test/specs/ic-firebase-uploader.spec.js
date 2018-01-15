@@ -93,4 +93,8 @@ describe('ic-firebase-uploader.vue', () => {
   it.skip('should emit click on clicking file', () => {
     // TODO: Implement test
   })
+
+  it.skip('initial-files should set the initial uploaded', () => {
+    // TODO: Implement test
+  })
 });

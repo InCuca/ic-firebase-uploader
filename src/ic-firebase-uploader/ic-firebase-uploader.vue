@@ -60,11 +60,40 @@ export default {
     storage: {
       type: Object,
       required: true,
+    },
+    /**
+     * You can set the current uploaded files in this object,
+     * eg: fotos: {image1: 'path/to/the/image1, image2: 'path/to/the/image2'}
+     */
+    initialFiles: {
+      type: Object,
+      default() {
+        return {}
+      }
     }
   },
   data: () => ({
     sentFiles: [],
   }),
+  watch: {
+    initialFiles(files) {
+      const filesEntries = Object.entries(files)
+      filesEntries.forEach(
+        (fullPath, index) => {
+          const ref = this.storage.ref(fullPath)
+          ref.getDownloadURL().then(downloadUrl => {
+            const newFile = {
+              id: index,
+              ref,
+              downloadUrl,
+              isLoading: false,
+            }
+            this.sentFiles.push(newFile)
+          })
+        }
+      )
+    }
+  },
   methods: {
     onFileLinkClick(fileRef, event) {
       /**
@@ -90,6 +119,7 @@ export default {
        * @type {Object}
        */
       this.$emit('delete', {
+        id: sentFile.id || null,
         fullPath: sentFile.ref.fullPath,
         doDelete: this.getDeleteFn(sentFile)
       })
@@ -179,6 +209,7 @@ export default {
              * @type {Object}
              */
             this.$emit('deleted', {
+              id: file.id || null,
               fullPath: fileRef.fullPath,
             })
           })

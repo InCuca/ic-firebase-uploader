@@ -97,4 +97,8 @@ describe('ic-firebase-uploader.vue', () => {
   it.skip('initial-files should set the initial uploaded', () => {
     // TODO: Implement test
   })
+
+  it.skip('should emit error when trying to load a file that does not have reference', () => {
+    // TODO: Implement test
+  })
 });

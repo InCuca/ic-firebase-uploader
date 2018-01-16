@@ -90,13 +90,17 @@ export default {
               return
 
             const ref = this.storage.ref(fullPath)
+            const newFile = {
+              id: index,
+              ref,
+              isLoading: false,
+            }
             ref.getDownloadURL().then(downloadUrl => {
-              const newFile = {
-                id: index,
-                ref,
-                downloadUrl,
-                isLoading: false,
-              }
+              newFile.downloadUrl = downloadUrl
+              this.sentFiles.push(newFile)
+            })
+            .catch(err => {
+              this.$emit('error', err)
               this.sentFiles.push(newFile)
             })
           }

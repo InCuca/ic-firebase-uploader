@@ -2,12 +2,18 @@
   "pkgFiles": [
     "package.json"
   ],
-  "github": {
-    "release": true
+  "src": {
+    "tagName": "v%s",
+    "tagAnnotation": "Release v%s",
+    "commitMessage": "Release v%s"
   },
-  "buildCommand": "npm run build",
+  "github": {
+    "release": true,
+    "releaseName": "Release v%s"
+  },
+  "buildCommand": "npm run build && npx conventional-changelog -p angular -i CHANGELOG.md -s",
   "increment": "conventional:angular",
-  "beforeChangelogCommand": "conventional-changelog -p angular -i CHANGELOG.md -s",
-  "changelogCommand": "conventional-changelog -p angular | tail -n +3",
+  "beforeChangelogCommand": "npx conventional-changelog -p angular -i CHANGELOG.md -s",
+  "changelogCommand": "npx conventional-changelog -p angular -u | tail -n +3",
   "safeBump": false
 }

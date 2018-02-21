@@ -200,7 +200,7 @@ export default {
             this.$emit('uploaded', {
               id,
               fullPath: fileRef.fullPath,
-              getDownloadURL: fileRef.getDownloadURL
+              getDownloadURL: fileRef.getDownloadURL.bind(fileRef)
             })
           })
           .catch(err => {

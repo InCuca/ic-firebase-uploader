@@ -1,3 +1,18 @@
+<a name="0.2.1"></a>
+## [0.2.1](https://github.com/InCuca/ic-firebase-uploader/compare/0.2.0...0.2.1) (2018-02-21)
+
+
+### Bug Fixes
+
+* **component:** getDownloadURL should be binded to fileRef ([258b022](https://github.com/InCuca/ic-firebase-uploader/commit/258b022))
+
+
+### Features
+
+* **release-it:** update config ([fac7f25](https://github.com/InCuca/ic-firebase-uploader/commit/fac7f25))
+
+
+
 <a name="0.0.2"></a>
 ## [0.0.2](https://github.com/InCuca/ic-firebase-uploader/compare/8718594...0.0.2) (2018-01-03)
 

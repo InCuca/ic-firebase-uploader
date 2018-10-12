@@ -64,14 +64,14 @@ function onDelete({doDelete}) {
 ```
 
 ```html
-<ic-firebase-upload
+<ic-firebase-uploader
   path="images"
   max-files="3"
   :getFileName="getFileName"
   :storage="getStorage()"
   @upload="onUpload"
   @delete="onDelete">
-</ic-firebase-upload>
+</ic-firebase-uploader>
 ```
 
 ## Demo and Docs

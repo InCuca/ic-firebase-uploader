@@ -49,5 +49,13 @@
     "vue-styleguidist": "^1.3.3",
     "vue-webpack-loaders": "^1.0.6",
     "webpack": "^3.1.0"
+  },
+  "bit": {
+    "env": {
+      "compiler": "bit.envs/bundlers/vue@2.6.15",
+      "tester": "bit.envs/testers/karma-mocha@1.7.1"
+    },
+    "componentsDefaultDirectory": "components/{name}",
+    "packageManager": "npm"
   }
 }
